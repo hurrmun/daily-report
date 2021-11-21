@@ -1,6 +1,5 @@
 //* Dependencies
 require("dotenv").config();
-const knex = require("./knex");
 const path = require("path");
 const express = require("express");
 const testController = require("./controllers/testController");

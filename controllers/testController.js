@@ -1,4 +1,4 @@
-const knex = require("../knex");
+const knex = require("../utils/knex");
 const express = require("express");
 const router = express.Router();
 
