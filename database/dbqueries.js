@@ -17,8 +17,14 @@ module.exports = {
     }
   },
 
-  async login(email) {
+  async findUser(email) {
     const getUser = await knex("users").where("email", email);
+    const user = getUser[0];
+    return user;
+  },
+
+  async findUserByUsername(username) {
+    const getUser = await knex("users").where("username", username);
     const user = getUser[0];
     return user;
   },

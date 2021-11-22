@@ -5,8 +5,17 @@ exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   try {
+    const userByEmail = await queries.findUser(email);
+    const userByUsername = await queries.findUser(email);
+    if (username === userByUsername.username) {
+      return next(new ErrorResponse("Username is already taken", 400));
+    }
+    if (email === userByEmail.email) {
+      return next(new ErrorResponse("Email is already taken", 400));
+    }
     queries.createUser(username, email, password);
-    res.send("created!"); //* change this with send token
+    //! change this with send token
+    res.send("created!");
   } catch (error) {
     console.log("error here!");
     next(error);
@@ -20,7 +29,7 @@ exports.login = async (req, res, next) => {
     return next(new ErrorResponse("Please provide an email and password", 400));
   }
   try {
-    const user = await queries.login(email);
+    const user = await queries.findUser(email);
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
