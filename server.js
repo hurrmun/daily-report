@@ -1,7 +1,8 @@
 //* Dependencies
-require("dotenv").config({ path: "./config.env" });
+require("dotenv").config({ path: "./config/config.env" });
 const path = require("path");
 const express = require("express");
+const errorHandler = require("./middleware/error.js");
 // const testController = require("./controllers/testController");
 
 //* Config
@@ -22,13 +23,20 @@ app.use(express.json());
 // app.use("/api/test", testController);
 app.use("/api/auth", require("./routes/auth"));
 
-//* Routes Start
+//* Use error handler middleware
+app.use(errorHandler);
 
+//* Routes Start
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build", "index.html"));
 });
 
 //* Listener
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log("serving on port: " + PORT);
+});
+
+process.on("unhandledRejection", (err, promise) => {
+  console.log(`Logged Error: ${err}`);
+  server.close(() => process.exit(1));
 });
