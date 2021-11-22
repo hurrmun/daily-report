@@ -44,6 +44,7 @@ build/Release
 
 # Dependency directories
 node_modules/
+/node_modules
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -74,6 +75,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variables file
+config.env
 .env
 .env.test
 .env.production
@@ -197,8 +199,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,osx,node,visualstudiocode
-
-client/package-lock.json
-package-lock.json
-
-package-lock.json
