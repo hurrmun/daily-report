@@ -23,13 +23,14 @@ const PrivateScreen = () => {
         const { data } = await axios.get("/api/private", config);
         setPrivateData(data.data);
       } catch (error) {
+        console.log(error);
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
       }
     };
 
     fetchPrivateDate();
-  }, [navigate]);
+  }, []);
 
   return (
     <>

@@ -46,7 +46,7 @@ const RegisterScreen = (props) => {
         { username, email, password },
         config
       );
-
+      console.log(data.token);
       localStorage.setItem("authToken", data.token);
       props.setLoggedIn(true);
       navigate("/", { replace: true });
@@ -131,7 +131,7 @@ const RegisterScreen = (props) => {
               <input
                 type="password"
                 required
-                id="password"
+                id="confirmPassword"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
