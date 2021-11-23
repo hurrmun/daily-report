@@ -2,7 +2,7 @@
   "name": "daily-report",
   "version": "1.0.0",
   "engines": {
-    "node": "16.12.0",
+    "node": "16.13.0",
     "npm": "8.1.0"
   },
   "description": "Daily report app that tracks various elements",
