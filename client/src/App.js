@@ -10,7 +10,7 @@ function App() {
     <div className="App font-dm-sans">
       <Routes>
         <Route path="/*" element={<PrivateRoute />}>
-          <Route element={<PrivateRoute />} />
+          <Route index element={<PrivateScreen />} />
         </Route>
         <Route path="/login" element={<LoginScreen />} />
         <Route path="/register" element={<RegisterScreen />} />
