@@ -1,11 +1,12 @@
 // Update with your config settings.
+require("dotenv").config({ path: "../config.env" });
 
 module.exports = {
   development: {
     client: "postgresql",
     connection: {
-      database: "daily_report",
-      user: "Herman",
+      database: process.env.DB_NAME,
+      user: process.env.USER,
       password: "",
     },
     pool: {
