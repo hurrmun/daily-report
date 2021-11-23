@@ -16,6 +16,7 @@ const Navbar = (props) => {
 
   const logoutHandler = () => {
     localStorage.removeItem("authToken");
+    props.setLoggedIn(false);
     navigate("/login", { replace: true });
   };
 

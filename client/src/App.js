@@ -11,7 +11,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div className="App font-dm-sans">
-      <Navbar loggedIn={loggedIn} />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className="pt-20">
         <Routes>
           <Route path="/*" element={<PrivateRoute />}>
