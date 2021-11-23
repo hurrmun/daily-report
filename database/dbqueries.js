@@ -1,5 +1,7 @@
 const knex = require("./database");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const express = require("express");
 
 module.exports = {
   async createUser(username, email, password) {
@@ -31,5 +33,11 @@ module.exports = {
 
   async matchPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
+  },
+
+  async getSignedToken(email) {
+    return jwt.sign({ email: email }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRE,
+    });
   },
 };

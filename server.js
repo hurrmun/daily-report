@@ -1,5 +1,5 @@
 //* Dependencies
-require("dotenv").config({ path: "./config/config.env" });
+require("dotenv").config({ path: "./config.env" });
 const path = require("path");
 const express = require("express");
 const errorHandler = require("./middleware/error.js");
