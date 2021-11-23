@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
-const RegisterScreen = () => {
+const RegisterScreen = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -48,7 +48,7 @@ const RegisterScreen = () => {
       );
 
       localStorage.setItem("authToken", data.token);
-
+      props.setLoggedIn(true);
       navigate("/", { replace: true });
     } catch (error) {
       console.log(error);
@@ -64,7 +64,9 @@ const RegisterScreen = () => {
       <div className="max-w-4xl lg:max-w-7xl mx-auto pt-4 px-4 sm:pt-6 lg:px-8">
         <form onSubmit={registerHandler}>
           <div className="grid grid-cols-1 justify-items-center text-midnight">
-            <h3 className="text-midnight text-4xl font-bold">Register</h3>
+            <h3 className="text-midnight text-4xl font-bold mb-4">
+              Register Account
+            </h3>
             {error && (
               <span className="text-white bg-brown-sugar">{error}</span>
             )}
