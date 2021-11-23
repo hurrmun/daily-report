@@ -1,14 +1,28 @@
 const queries = require("../database/dbqueries");
 const ErrorResponse = require("../utils/errorResponse");
+const auth = require("../middleware/auth");
 
 exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   try {
-    queries.createUser(username, email, password);
-    res.send("created!"); //* change this with send token
+    const userByEmail = await queries.findUser(email);
+    const userByUsername = await queries.findUser(username);
+    if (username === userByUsername?.username) {
+      return next(new ErrorResponse("Username is already taken", 400));
+    }
+    if (email === userByEmail?.email) {
+      return next(new ErrorResponse("Email is already taken", 400));
+    }
+    const user = await queries.createUser(username, email, password);
+    //! change this with send token
+    const token = auth.getToken(user.id, user.username);
+    res.status(200).json({
+      success: true,
+      token: token,
+    });
   } catch (error) {
-    console.log("error here!");
+    console.log(error);
     next(error);
   }
 };
@@ -20,7 +34,7 @@ exports.login = async (req, res, next) => {
     return next(new ErrorResponse("Please provide an email and password", 400));
   }
   try {
-    const user = await queries.login(email);
+    const user = await queries.findUser(email);
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
@@ -31,7 +45,12 @@ exports.login = async (req, res, next) => {
       return next(new ErrorResponse("Invalid Credentials (password)", 401));
     }
     //! Change res.json to respond with jsonwebtoken
-    res.json(user);
+    const token = auth.getToken(user.id, user.username);
+    res.status(200).json({
+      success: true,
+      token: token,
+    });
+    // sendToken(user, 200, res);
   } catch (error) {
     next(error);
   }
@@ -43,4 +62,9 @@ exports.login = async (req, res, next) => {
 
 // exports.resetpassword = async (req, res, next) => {
 //   res.send("resetpassword route");
+// };
+
+// const sendToken = (user, statusCode, res) => {
+//   const token = queries.getSignedToken(user.email);
+//   res.status(statusCode).json({ success: true, token });
 // };

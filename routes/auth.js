@@ -10,8 +10,7 @@ const {
   // resetpassword,
 } = require("../controllers/auth");
 
-// router.route("/register").post(register);
-router.post("/register", validateDto(devDto), register);
+router.route("/register").post(validateDto(devDto), register);
 
 router.route("/login").post(login);
 

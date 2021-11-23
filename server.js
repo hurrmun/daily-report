@@ -1,5 +1,5 @@
 //* Dependencies
-require("dotenv").config({ path: "./config/config.env" });
+require("dotenv").config({ path: "./config.env" });
 const path = require("path");
 const express = require("express");
 const errorHandler = require("./middleware/error.js");
@@ -22,6 +22,7 @@ app.use(express.json());
 //* Middleware for controllers (+ dependency in require)
 // app.use("/api/test", testController);
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/private", require("./routes/private"));
 
 //* Use error handler middleware
 app.use(errorHandler);

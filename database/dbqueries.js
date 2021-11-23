@@ -1,5 +1,6 @@
 const knex = require("./database");
 const bcrypt = require("bcrypt");
+// const jwt = require("jsonwebtoken");
 
 module.exports = {
   async createUser(username, email, password) {
@@ -17,8 +18,14 @@ module.exports = {
     }
   },
 
-  async login(email) {
+  async findUser(email) {
     const getUser = await knex("users").where("email", email);
+    const user = getUser[0];
+    return user;
+  },
+
+  async findUserByUsername(username) {
+    const getUser = await knex("users").where("username", username);
     const user = getUser[0];
     return user;
   },
@@ -26,4 +33,10 @@ module.exports = {
   async matchPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
   },
+
+  //   async getSignedToken(email) {
+  //     return jwt.sign({ email: email }, process.env.JWT_SECRET, {
+  //       expiresIn: process.env.JWT_EXPIRE,
+  //     });
+  //   },
 };
