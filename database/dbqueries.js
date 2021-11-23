@@ -18,7 +18,7 @@ module.exports = {
     }
   },
 
-  async findUser(email) {
+  async findUserByEmail(email) {
     const getUser = await knex("users").where("email", email);
     const user = getUser[0];
     return user;

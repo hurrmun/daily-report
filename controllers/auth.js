@@ -6,8 +6,8 @@ exports.register = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   try {
-    const userByEmail = await queries.findUser(email);
-    const userByUsername = await queries.findUser(username);
+    const userByEmail = await queries.findUserByEmail(email);
+    const userByUsername = await queries.findUserByUsername(username);
     if (username === userByUsername?.username) {
       return next(new ErrorResponse("Username is already taken", 400));
     }
@@ -34,7 +34,7 @@ exports.login = async (req, res, next) => {
     return next(new ErrorResponse("Please provide an email and password", 400));
   }
   try {
-    const user = await queries.findUser(email);
+    const user = await queries.findUserByEmail(email);
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
