@@ -11,9 +11,9 @@ module.exports = {
       noTimestamp: true,
     });
   },
-  decodeToken(token) {
-    return jwt.verify(token, privateKey);
-  },
+  // decodeToken(token) {
+  //   return jwt.verify(token, privateKey);
+  // },
   async protect(req, res, next) {
     let token;
     if (
@@ -29,8 +29,10 @@ module.exports = {
     }
 
     try {
+      // console.log(token);
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const user = await knex("users").where("id", decoded.user_id);
+      // console.log(decoded);
+      const user = await knex("users").where("username", decoded.username);
 
       if (!user) {
         return next(new ErrorResponse("No user found with this ID", 404));

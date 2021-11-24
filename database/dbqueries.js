@@ -19,19 +19,32 @@ module.exports = {
   },
 
   async findUserByEmail(email) {
-    const getUser = await knex("users").where("email", email);
+    const getUser = await knex("users")
+      .where("email", email)
+      .select("username", "user_id", "email");
     const user = getUser[0];
     return user;
   },
 
   async findUserByUsername(username) {
-    const getUser = await knex("users").where("username", username);
+    const getUser = await knex("users")
+      .where("username", username)
+      .select("username", "user_id", "email");
     const user = getUser[0];
     return user;
   },
 
   async matchPassword(password, hashedPassword) {
     return await bcrypt.compare(password, hashedPassword);
+  },
+
+  async getEntriesByDate(date) {
+    const entries = await knex("entry")
+      .where("date", date)
+      .join("users", "entry.user_id", "=", "users.user_id")
+      .select("username");
+    // console.log("entries", entries);
+    return entries;
   },
 
   //   async getSignedToken(email) {
