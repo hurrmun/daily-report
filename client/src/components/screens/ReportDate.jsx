@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-const ReportDate = () => {
+const ReportDate = (props) => {
   const { date } = useParams();
 
   const ReportButton = (props) => {

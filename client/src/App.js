@@ -10,14 +10,21 @@ import ReportDate from "./components/screens/ReportDate";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
   return (
     <div className="App font-dm-sans">
       <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className="pt-20">
         <Routes>
           <Route path="/*" element={<PrivateRoute />}>
-            <Route index element={<Homepage />} />
-            <Route path="reports/:date" element={<ReportDate />} />
+            <Route
+              index
+              element={<Homepage setSelectedDate={setSelectedDate} />}
+            />
+            <Route
+              path="reports/:date"
+              element={<ReportDate selectedDate={selectedDate} />}
+            />
           </Route>
           <Route
             path="/login"

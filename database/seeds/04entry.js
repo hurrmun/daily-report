@@ -6,7 +6,7 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("entry").insert([
         {
-          date: new Date(2021, 11, 24),
+          date: new Date(),
           user_id: 1,
           material_id: 4,
           supplier_id: 2,
@@ -16,7 +16,7 @@ exports.seed = function (knex) {
           remarks: "",
         },
         {
-          date: new Date(2021, 11, 24),
+          date: new Date(),
           user_id: 1,
           material_id: 4,
           supplier_id: 3,
@@ -26,7 +26,7 @@ exports.seed = function (knex) {
           remarks: "",
         },
         {
-          date: new Date(2021, 11, 24),
+          date: new Date(),
           user_id: 2,
           material_id: 5,
           supplier_id: 1,

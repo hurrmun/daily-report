@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 
-const Homepage = () => {
+const Homepage = (props) => {
   const navigate = useNavigate();
   // const [error, setError] = useState("");
   // const [privateData, setPrivateData] = useState("");
@@ -36,11 +36,12 @@ const Homepage = () => {
 
   const clickDayHandler = (date) => {
     setDate(date);
+    props.setSelectedDate(date);
   };
 
   const clickButtonHandler = () => {
     let formattedDate = date.toString().split(" ").slice(1, 4).join("_");
-    // console.log(formattedDate);
+    // console.log(date);
     navigate(`/reports/${formattedDate}`);
   };
 
