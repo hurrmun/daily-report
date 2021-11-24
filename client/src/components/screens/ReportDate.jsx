@@ -5,7 +5,7 @@ const ReportDate = () => {
 
   const ReportButton = (props) => {
     return (
-      <button className="bg-shamrock-green rounded text-white font-bold py-2 px-4 hover:bg-brown-sugar w-10/12">
+      <button className="bg-shamrock-green rounded text-white font-bold py-2 px-4 hover:bg-brown-sugar">
         {props.function}
       </button>
     );
