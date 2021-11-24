@@ -46,10 +46,10 @@ const RegisterScreen = (props) => {
         { username, email, password },
         config
       );
-      console.log(data.token);
+      //   console.log(data.token);
       localStorage.setItem("authToken", data.token);
       props.setLoggedIn(true);
-      navigate("/", { replace: true });
+      navigate("/");
     } catch (error) {
       console.log(error);
       setError(error.response.data.error);

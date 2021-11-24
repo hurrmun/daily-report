@@ -29,7 +29,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: "knex_migrations",
+      directory: "daily-report" + "/database/migrations",
     },
   },
 };

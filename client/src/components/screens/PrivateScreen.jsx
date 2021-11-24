@@ -30,7 +30,7 @@ const PrivateScreen = () => {
     };
 
     fetchPrivateDate();
-  }, []);
+  }, [navigate]);
 
   return (
     <>
