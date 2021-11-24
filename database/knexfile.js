@@ -29,7 +29,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      directory: "daily-report" + "/database/migrations",
+      directory: __dirname + "/db/migrations",
     },
   },
 };
