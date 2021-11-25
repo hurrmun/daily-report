@@ -126,3 +126,19 @@ exports.editReport = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.deleteReport = async (req, res, next) => {
+  const { date } = req.params;
+  queries.deleteEntry(new Date(date), req.user);
+  try {
+    res.status(200).json({
+      success: true,
+      data: {
+        user: req.user,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

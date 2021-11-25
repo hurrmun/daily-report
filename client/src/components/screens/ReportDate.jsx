@@ -5,6 +5,7 @@ import ShowReports from "../ShowReports";
 
 const ReportDate = (props) => {
   const navigate = useNavigate();
+
   const { date } = useParams();
   const [reports, setReports] = useState({});
   const [user, setUser] = useState("");
@@ -54,6 +55,29 @@ const ReportDate = (props) => {
     );
   };
 
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+
+    try {
+      const { data } = await axios.delete(
+        `/api/private/deleteReport/${selectedDate}`,
+        config
+      );
+      navigate("/", { replace: true });
+    } catch (error) {
+      console.log(error);
+      localStorage.removeItem("authToken");
+      setError("You are not authorized please login");
+      navigate("/login", { replace: true });
+    }
+  };
+
   return (
     <div className="max-w-6xl lg:max-w-xl mx-auto pt-4 px-4 sm:pt-6 lg:px-8">
       <div className="grid grid-cols-1">
@@ -74,7 +98,12 @@ const ReportDate = (props) => {
             </tr>
           </thead>
           <tbody className="text-pine-green">
-            <ShowReports reports={reports} user={user} date={date} />
+            <ShowReports
+              reports={reports}
+              user={user}
+              date={date}
+              handleDelete={handleDelete}
+            />
           </tbody>
         </table>
       </div>

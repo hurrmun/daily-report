@@ -25,7 +25,12 @@ const Report = (props) => {
       </td>
       <td className="py-4 text-center">
         {props.currentUser === props.username ? (
-          <ReportButton function="delete" />
+          <button
+            onClick={props.handleDelete}
+            className="bg-shamrock-green rounded text-white font-bold py-2 px-4 hover:bg-brown-sugar"
+          >
+            delete
+          </button>
         ) : (
           ""
         )}
