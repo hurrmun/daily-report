@@ -38,14 +38,13 @@ exports.login = async (req, res, next) => {
     if (!user) {
       return next(new ErrorResponse("Invalid Credentials", 401));
     }
-
     const isMatch = await queries.matchPassword(password, user.password_hash);
 
     if (!isMatch) {
       return next(new ErrorResponse("Invalid Credentials (password)", 401));
     }
     //! Change res.json to respond with jsonwebtoken
-    const token = auth.getToken(user.id, user.username);
+    const token = auth.getToken(user.user_id, user.username);
     res.status(200).json({
       success: true,
       token: token,
