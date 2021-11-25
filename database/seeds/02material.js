@@ -5,12 +5,12 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex("material").insert([
-        { name: "10mm" },
-        { name: "20mm" },
-        { name: "Sand" },
-        { name: "Dust" },
-        { name: "OPC" },
-        { name: "Slag" },
+        { material: "10mm" },
+        { material: "20mm" },
+        { material: "Sand" },
+        { material: "Dust" },
+        { material: "OPC" },
+        { material: "Slag" },
       ]);
     });
 };

@@ -8,9 +8,10 @@ const Homepage = (props) => {
   const navigate = useNavigate();
   // const [error, setError] = useState("");
   // const [privateData, setPrivateData] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(withoutTime());
 
   useEffect(() => {
+    setDate(withoutTime());
     if (!localStorage.getItem("authToken")) {
       navigate("/login", { replace: true });
     }
@@ -26,6 +27,12 @@ const Homepage = (props) => {
     // console.log(date);
     navigate(`/reports/${formattedDate}`);
   };
+
+  function withoutTime() {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
 
   return (
     <>

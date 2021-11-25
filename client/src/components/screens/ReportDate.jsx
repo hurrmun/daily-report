@@ -8,9 +8,9 @@ const ReportDate = (props) => {
   const [reports, setReports] = useState({});
   const [user, setUser] = useState("");
   const [error, setError] = useState("");
+  const selectedDate = props.selectedDate;
 
   useEffect(() => {
-    const date = props.selectedDate;
     const fetchEntiresByDate = async () => {
       const config = {
         headers: {
@@ -21,7 +21,7 @@ const ReportDate = (props) => {
 
       try {
         const { data } = await axios.get(
-          `/api/private/getEntries/${date}`,
+          `/api/private/getEntries/${selectedDate}`,
           config
         );
         setReports(data.data.entries);
@@ -34,7 +34,7 @@ const ReportDate = (props) => {
       }
     };
     fetchEntiresByDate();
-  });
+  }, [selectedDate, navigate]);
 
   const ShowReports = (props) => {
     const Report = (props) => {

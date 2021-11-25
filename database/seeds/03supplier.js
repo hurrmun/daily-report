@@ -5,13 +5,13 @@ exports.seed = function (knex) {
     .then(function () {
       // Inserts seed entries
       return knex("supplier").insert([
-        { name: "YTL" },
-        { name: "Asia" },
-        { name: "KKL" },
-        { name: "Kwong Fong" },
-        { name: "HDB Site A" },
-        { name: "HDB Site B" },
-        { name: "HDB Site C" },
+        { supplier: "YTL" },
+        { supplier: "Asia" },
+        { supplier: "KKL" },
+        { supplier: "Kwong Fong" },
+        { supplier: "HDB Site A" },
+        { supplier: "HDB Site B" },
+        { supplier: "HDB Site C" },
       ]);
     });
 };

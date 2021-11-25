@@ -45,6 +45,25 @@ module.exports = {
     return entries;
   },
 
+  async getEntriesByUser(date, username) {
+    const entries = await knex("entry")
+      .join("users", "entry.user_id", "=", "users.user_id")
+      .join("material", "entry.material_id", "=", "material.material_id")
+      .join("supplier", "entry.supplier_id", "=", "supplier.supplier_id")
+      .where({ date: date, username: username })
+      .select(
+        "entry_id",
+        "material",
+        "supplier",
+        "ordered_load",
+        "received_load",
+        "quantity(MT)",
+        "remarks"
+      );
+    // console.log("entries", entries);
+    return entries;
+  },
+
   //   async getSignedToken(email) {
   //     return jwt.sign({ email: email }, process.env.JWT_SECRET, {
   //       expiresIn: process.env.JWT_EXPIRE,
