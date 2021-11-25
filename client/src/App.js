@@ -7,6 +7,8 @@ import LoginScreen from "./components/screens/LoginScreen";
 import RegisterScreen from "./components/screens/RegisterScreen";
 import Navbar from "./components/Navbar";
 import ReportDate from "./components/screens/ReportDate";
+import UserReport from "./components/screens/UserReport";
+import NewReport from "./components/screens/NewReport";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -24,6 +26,14 @@ function App() {
             <Route
               path="reports/:date"
               element={<ReportDate selectedDate={selectedDate} />}
+            />
+            <Route
+              path="reports/:date/:user"
+              element={<UserReport selectedDate={selectedDate} />}
+            />
+            <Route
+              path="reports/:date/:user/new"
+              element={<NewReport selectedDate={selectedDate} />}
             />
           </Route>
           <Route

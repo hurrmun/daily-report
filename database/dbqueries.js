@@ -19,9 +19,7 @@ module.exports = {
   },
 
   async findUserByEmail(email) {
-    const getUser = await knex("users")
-      .where("email", email)
-      .select("username", "user_id", "email");
+    const getUser = await knex("users").where("email", email);
     const user = getUser[0];
     return user;
   },
@@ -47,6 +45,55 @@ module.exports = {
     return entries;
   },
 
+  async getEntriesByUser(date, username) {
+    const entries = await knex("entry")
+      .join("users", "entry.user_id", "=", "users.user_id")
+      .join("material", "entry.material_id", "=", "material.material_id")
+      .join("supplier", "entry.supplier_id", "=", "supplier.supplier_id")
+      .where({ date: date, username: username })
+      .select(
+        "entry_id",
+        "material",
+        "supplier",
+        "ordered_load",
+        "received_load",
+        "quantity(MT)",
+        "remarks"
+      );
+    // console.log("entries", entries);
+    return entries;
+  },
+
+  async getMaterials() {
+    const materials = await knex("material");
+    return materials;
+  },
+
+  async getSuppliers() {
+    const suppliers = await knex("supplier");
+    return suppliers;
+  },
+
+  async createEntry(entry, user) {
+    try {
+      return knex("entry")
+        .returning(["entry_id", "user_id"])
+        .insert({
+          date: new Date(entry.date),
+          user_id: user.user_id,
+          material_id: entry.material.material_id,
+          supplier_id: entry.supplier.supplier_id,
+          ordered_load: entry.ordered_load,
+          received_load: entry.received_load,
+          "quantity(MT)": entry.quantity,
+          remarks: entry.remarks,
+        });
+    } catch (error) {
+      console.log("That did not go well.");
+      console.error(error);
+      process.exit(1);
+    }
+  },
   //   async getSignedToken(email) {
   //     return jwt.sign({ email: email }, process.env.JWT_SECRET, {
   //       expiresIn: process.env.JWT_EXPIRE,

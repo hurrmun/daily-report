@@ -1,11 +1,10 @@
 const queries = require("../database/dbqueries");
-const ErrorResponse = require("../utils/errorResponse");
-const auth = require("../middleware/auth");
+// const ErrorResponse = require("../utils/errorResponse");
 
-exports.getAllEntriesByDate = async (req, res, next) => {
+exports.getReportsByDate = async (req, res, next) => {
   const { date } = req.params;
   // console.log(date);
-  const user = await queries.findUserByUsername(req.user[0].username);
+  // const user = await queries.findUserByUsername(req.user[0].username);
   const entries = await queries.getEntriesByDate(new Date(date));
   const allEntries = {};
   for (const entry of entries) {
@@ -19,7 +18,7 @@ exports.getAllEntriesByDate = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {
-        user: user,
+        user: req.user,
         date: date,
         entries: allEntries,
       },
@@ -30,24 +29,58 @@ exports.getAllEntriesByDate = async (req, res, next) => {
   }
 };
 
-exports.register = async (req, res, next) => {
-  const { username, email, password } = req.body;
+exports.getReportByUser = async (req, res, next) => {
+  const { date, username } = req.params;
+  // console.log(date);
+  // const user = await queries.findUserByUsername(req.user[0].username);
+  const entries = await queries.getEntriesByUser(new Date(date), username);
 
   try {
-    const userByEmail = await queries.findUserByEmail(email);
-    const userByUsername = await queries.findUserByUsername(username);
-    if (username === userByUsername?.username) {
-      return next(new ErrorResponse("Username is already taken", 400));
-    }
-    if (email === userByEmail?.email) {
-      return next(new ErrorResponse("Email is already taken", 400));
-    }
-    const user = await queries.createUser(username, email, password);
-    //! change this with send token
-    const token = auth.getToken(user.id, user.username);
     res.status(200).json({
       success: true,
-      token: token,
+      data: {
+        user: req.user,
+        date: date,
+        entries: entries,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+exports.getOptions = async (req, res, next) => {
+  const options = {};
+  options.materials = await queries.getMaterials();
+  options.suppliers = await queries.getSuppliers();
+
+  try {
+    res.status(200).json({
+      success: true,
+      data: {
+        user: req.user,
+        options: options,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
+
+exports.submitReport = async (req, res, next) => {
+  const report = req.body.entries;
+  console.log(report);
+  for (const entry of report) {
+    queries.createEntry(entry, req.user);
+  }
+  try {
+    res.status(200).json({
+      success: true,
+      data: {
+        user: req.user,
+      },
     });
   } catch (error) {
     console.log(error);

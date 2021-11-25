@@ -8,30 +8,14 @@ const Homepage = (props) => {
   const navigate = useNavigate();
   // const [error, setError] = useState("");
   // const [privateData, setPrivateData] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(withoutTime());
 
   useEffect(() => {
+    setDate(withoutTime());
     if (!localStorage.getItem("authToken")) {
       navigate("/login", { replace: true });
     }
-    // const fetchPrivateDate = async () => {
-    //   const config = {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-    //     },
-    //   };
-
-    //   try {
-    //     const { data } = await axios.get("/api/private", config);
-    //     setPrivateData(data.data);
-    //   } catch (error) {
-    //     console.log(error);
-    //     localStorage.removeItem("authToken");
-    //     setError("You are not authorized please login");
-    //   }
-    // };
-    // fetchPrivateDate();
+    props.setSelectedDate(withoutTime());
   }, [navigate]);
 
   const clickDayHandler = (date) => {
@@ -42,8 +26,14 @@ const Homepage = (props) => {
   const clickButtonHandler = () => {
     let formattedDate = date.toString().split(" ").slice(1, 4).join("_");
     // console.log(date);
-    navigate(`/reports/${formattedDate}`);
+    navigate(`reports/${formattedDate}`);
   };
+
+  function withoutTime() {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }
 
   return (
     <>
@@ -55,7 +45,7 @@ const Homepage = (props) => {
               view="month"
               onClickDay={(date) => clickDayHandler(date)}
               value={date}
-              className="flex-grow rounded border-shamrock-green text-midnight text-xl justify-self-stretch px-10 tablet:px-32 py-4"
+              className="flex-grow text-midnight text-xl justify-self-stretch px-10 tablet:px-32 py-4"
               tileClassName="rounded text-md"
             />
             {console.log(date)}
