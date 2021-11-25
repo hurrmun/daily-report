@@ -49,3 +49,22 @@ exports.getReportByUser = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getOptions = async (req, res, next) => {
+  const options = {};
+  options.materials = await queries.getMaterials();
+  options.suppliers = await queries.getSuppliers();
+
+  try {
+    res.status(200).json({
+      success: true,
+      data: {
+        user: req.user,
+        options: options,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

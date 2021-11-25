@@ -37,11 +37,18 @@ const ReportDate = (props) => {
     fetchEntriesByDate();
   }, [selectedDate, navigate]);
 
-  const NewEditButton = (props) => {
+  const NewReportButton = (props) => {
+    const makeNewReport = () => {
+      // console.log(props.user);
+      navigate(`/reports/${date}/${props.user}/new`);
+    };
     return (
       <>
-        <button className="bg-pine-green rounded text-white text-xl font-bold py-2 px-4 hover:bg-brown-sugar">
-          {props.function} report
+        <button
+          onClick={makeNewReport}
+          className="bg-pine-green rounded text-white text-xl font-bold py-2 px-4 hover:bg-brown-sugar"
+        >
+          New report
         </button>
       </>
     );
@@ -54,7 +61,7 @@ const ReportDate = (props) => {
           <h1 className="text-3xl font-bold text-midnight">
             {date?.split("_")?.join(" ")}
           </h1>
-          <NewEditButton function="new" />
+          {reports.username ? null : <NewReportButton user={user} />}
         </div>
         <table className="table-fixed text-midnight border-seperate">
           <thead className="text-lg">

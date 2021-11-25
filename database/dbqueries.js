@@ -64,6 +64,16 @@ module.exports = {
     return entries;
   },
 
+  async getMaterials() {
+    const materials = await knex("material");
+    return materials;
+  },
+
+  async getSuppliers() {
+    const suppliers = await knex("supplier");
+    return suppliers;
+  },
+
   //   async getSignedToken(email) {
   //     return jwt.sign({ email: email }, process.env.JWT_SECRET, {
   //       expiresIn: process.env.JWT_EXPIRE,

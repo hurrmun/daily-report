@@ -38,7 +38,7 @@ module.exports = {
         return next(new ErrorResponse("No user found with this ID", 404));
       }
 
-      req.user = user;
+      req.user = user[0];
 
       next();
     } catch (error) {
