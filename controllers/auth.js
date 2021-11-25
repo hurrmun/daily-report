@@ -14,10 +14,13 @@ exports.register = async (req, res, next) => {
     if (email === userByEmail?.email) {
       return next(new ErrorResponse("Email is already taken", 400));
     }
-    const user = await queries.createUser(username, email, password);
+    await queries.createUser(username, email, password);
     const registeredUser = await queries.findUserByEmail(email);
     //! change this with send token
-    const token = auth.getToken(registeredUser.user_id, user.username);
+    const token = auth.getToken(
+      registeredUser.user_id,
+      registeredUser.username
+    );
     res.status(200).json({
       success: true,
       token: token,
