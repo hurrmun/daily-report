@@ -54,10 +54,12 @@ module.exports = {
       .select(
         "entry_id",
         "material",
+        "entry.material_id",
         "supplier",
+        "entry.supplier_id",
         "ordered_load",
         "received_load",
-        "quantity(MT)",
+        "quantity",
         "remarks"
       );
     // console.log("entries", entries);
@@ -85,9 +87,19 @@ module.exports = {
           supplier_id: entry.supplier.supplier_id,
           ordered_load: entry.ordered_load,
           received_load: entry.received_load,
-          "quantity(MT)": entry.quantity,
+          quantity: entry.quantity,
           remarks: entry.remarks,
         });
+    } catch (error) {
+      console.log("That did not go well.");
+      console.error(error);
+      process.exit(1);
+    }
+  },
+
+  async deleteEntry(date, user) {
+    try {
+      return knex("entry").where({ date: date, user_id: user.user_id }).del();
     } catch (error) {
       console.log("That did not go well.");
       console.error(error);

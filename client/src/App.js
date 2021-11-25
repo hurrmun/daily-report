@@ -9,6 +9,7 @@ import Navbar from "./components/Navbar";
 import ReportDate from "./components/screens/ReportDate";
 import UserReport from "./components/screens/UserReport";
 import NewReport from "./components/screens/NewReport";
+import EditReport from "./components/screens/EditReport";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -34,6 +35,10 @@ function App() {
             <Route
               path="reports/:date/:user/new"
               element={<NewReport selectedDate={selectedDate} />}
+            />
+            <Route
+              path="reports/:date/:user/edit"
+              element={<EditReport selectedDate={selectedDate} />}
             />
           </Route>
           <Route

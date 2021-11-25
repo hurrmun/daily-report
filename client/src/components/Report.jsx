@@ -14,14 +14,18 @@ const Report = (props) => {
       </td>
       <td className="py-4 text-center">
         {props.currentUser === props.username ? (
-          <ReportButton function="edit" />
+          <ReportButton
+            function="edit"
+            date={props.date}
+            username={props.username}
+          />
         ) : (
           ""
         )}
       </td>
       <td className="py-4 text-center">
         {props.currentUser === props.username ? (
-          <ReportButton function="edit" />
+          <ReportButton function="delete" />
         ) : (
           ""
         )}
