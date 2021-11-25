@@ -15,6 +15,7 @@ const Homepage = (props) => {
     if (!localStorage.getItem("authToken")) {
       navigate("/login", { replace: true });
     }
+    props.setSelectedDate(withoutTime());
   }, [navigate]);
 
   const clickDayHandler = (date) => {
@@ -25,7 +26,7 @@ const Homepage = (props) => {
   const clickButtonHandler = () => {
     let formattedDate = date.toString().split(" ").slice(1, 4).join("_");
     // console.log(date);
-    navigate(`/reports/${formattedDate}`);
+    navigate(`reports/${formattedDate}`);
   };
 
   function withoutTime() {
