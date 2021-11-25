@@ -74,6 +74,26 @@ module.exports = {
     return suppliers;
   },
 
+  async createEntry(entry, user) {
+    try {
+      return knex("entry")
+        .returning(["entry_id", "user_id"])
+        .insert({
+          date: new Date(entry.date),
+          user_id: user.user_id,
+          material_id: entry.material.material_id,
+          supplier_id: entry.supplier.supplier_id,
+          ordered_load: entry.ordered_load,
+          received_load: entry.received_load,
+          "quantity(MT)": entry.quantity,
+          remarks: entry.remarks,
+        });
+    } catch (error) {
+      console.log("That did not go well.");
+      console.error(error);
+      process.exit(1);
+    }
+  },
   //   async getSignedToken(email) {
   //     return jwt.sign({ email: email }, process.env.JWT_SECRET, {
   //       expiresIn: process.env.JWT_EXPIRE,

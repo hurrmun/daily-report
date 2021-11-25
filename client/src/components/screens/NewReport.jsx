@@ -37,24 +37,28 @@ const NewReport = (props) => {
     fetchOptions();
   }, [navigate]);
 
-  //   const createNewReport = async (e) => {
-  //     e.preventDefault();
-  //     const config = {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-  //       },
-  //     };
-
-  //     try {
-  //       const { data } = await axios.post(
-  //         `/api/private/newEntries`,
-  //         //! body of request here
-  //         config
-  //       );
-  //       console.log(data);
-  //     } catch (error) {}
-  //   };
+  const submitReport = async (e) => {
+    e.preventDefault();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    };
+    try {
+      const { data } = await axios.post(
+        `/api/private/submitReport`,
+        { entries },
+        config
+      );
+      setEntries([]);
+      navigate(-1, { replace: true });
+    } catch (error) {
+      localStorage.removeItem("authToken");
+      setError("You are not authorized please login");
+      navigate("/login", { replace: true });
+    }
+  };
 
   const newEntryHandler = (e) => {
     e.preventDefault();
@@ -65,6 +69,7 @@ const NewReport = (props) => {
     entry.received_load = e.target.receivedLoad.value;
     entry.quantity = e.target.quantity.value;
     entry.remarks = e.target.remarks.value;
+    entry.date = props.selectedDate;
     // console.log(entry);
     setEntries([...entries, entry]);
   };
@@ -138,9 +143,19 @@ const NewReport = (props) => {
     );
   };
 
+  const handleDelete = (index) => {
+    console.log("index", index);
+    const newEntries = entries.filter((entry, i) => {
+      console.log("i", i);
+      return i !== index;
+    });
+    setEntries(newEntries);
+  };
+
   const ShowNewEntries = (props) => {
     const entries = props.entries;
     console.log(entries);
+
     const NewEntry = (props) => {
       return (
         <tr className="border border-shamrock-green">
@@ -151,7 +166,10 @@ const NewReport = (props) => {
           <td className="py-4 text-center">{props.quantity}</td>
           <td className="py-4 text-center">{props.remarks}</td>
           <td className="py-4 text-center">
-            <button className="bg-shamrock-green text-white rounded p-2 hover:bg-brown-sugar">
+            <button
+              onClick={() => props.handleDelete(props.index)}
+              className="bg-shamrock-green text-white rounded p-2 hover:bg-brown-sugar"
+            >
               delete
             </button>
           </td>
@@ -159,16 +177,18 @@ const NewReport = (props) => {
       );
     };
 
-    const allEntries = entries.map((item) => {
+    const allEntries = entries.map((item, index) => {
       return (
         <NewEntry
-          key={item.entry_id}
+          key={index}
+          index={index}
           material={item.material.material}
           supplier={item.supplier.supplier}
           ordered_load={item.ordered_load}
           received_load={item.received_load}
           quantity={item.quantity}
           remarks={item.remarks}
+          handleDelete={props.handleDelete}
         />
       );
     });
@@ -176,10 +196,13 @@ const NewReport = (props) => {
     return <>{allEntries}</>;
   };
 
-  const SubmitReportButton = () => {
+  const SubmitReportButton = (props) => {
     return (
       <>
-        <button className="bg-pine-green rounded text-white text-xl font-bold py-2 px-4 hover:bg-brown-sugar">
+        <button
+          onClick={props.submitReport}
+          className="bg-pine-green rounded text-white text-xl font-bold py-2 px-4 hover:bg-brown-sugar"
+        >
           Submit Report
         </button>
       </>
@@ -196,7 +219,7 @@ const NewReport = (props) => {
             </Link>{" "}
             - {user} - New Report
           </h1>
-          <SubmitReportButton />
+          <SubmitReportButton submitReport={submitReport} />
         </div>
         <form onSubmit={newEntryHandler} className="grid grid-cols-1">
           <table className="table-fixed text-midnight border-seperate">
@@ -233,7 +256,7 @@ const NewReport = (props) => {
             </tr>
           </thead>
           <tbody className="text-pine-green">
-            <ShowNewEntries entries={entries} />
+            <ShowNewEntries entries={entries} handleDelete={handleDelete} />
           </tbody>
         </table>
       </div>

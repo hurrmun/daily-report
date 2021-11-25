@@ -61,7 +61,7 @@ const ReportDate = (props) => {
           <h1 className="text-3xl font-bold text-midnight">
             {date?.split("_")?.join(" ")}
           </h1>
-          {reports.username ? null : <NewReportButton user={user} />}
+          {reports[user] ? null : <NewReportButton user={user} />}
         </div>
         <table className="table-fixed text-midnight border-seperate">
           <thead className="text-lg">

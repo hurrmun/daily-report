@@ -68,3 +68,22 @@ exports.getOptions = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.submitReport = async (req, res, next) => {
+  const report = req.body.entries;
+  console.log(report);
+  for (const entry of report) {
+    queries.createEntry(entry, req.user);
+  }
+  try {
+    res.status(200).json({
+      success: true,
+      data: {
+        user: req.user,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
