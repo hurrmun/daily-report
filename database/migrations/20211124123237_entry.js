@@ -19,7 +19,7 @@ exports.up = function (knex) {
       .inTable("supplier");
     table.integer("ordered_load");
     table.integer("received_load");
-    table.float("quantity(MT)").notNullable();
+    table.float("quantity");
     table.string("remarks");
   });
 };

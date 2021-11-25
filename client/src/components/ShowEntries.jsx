@@ -12,7 +12,7 @@ const ShowEntries = (props) => {
         supplier={item.supplier}
         ordered_load={item.ordered_load}
         received_load={item.received_load}
-        quantity={item["quantity(MT)"]}
+        quantity={item.quantity}
         remarks={item.remarks}
       />
     );

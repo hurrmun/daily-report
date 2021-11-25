@@ -10,6 +10,7 @@ const ShowReports = (props) => {
         currentUser={props.user}
         key={report}
         date={props.date}
+        handleDelete={props.handleDelete}
       />
     );
   }
