@@ -87,7 +87,7 @@ const UserReport = (props) => {
               <th className="w-2/12 py-4">Supplier</th>
               <th className="w-2/12 py-4">Ordered Load</th>
               <th className="w-2/12 py-4">Received Load</th>
-              <th className="w-2/12 py-4">Quantity</th>
+              <th className="w-2/12 py-4">Quantity (MT)</th>
               <th className="w-2/12 py-4">Remarks</th>
             </tr>
           </thead>

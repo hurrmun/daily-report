@@ -45,7 +45,7 @@ const Homepage = (props) => {
               view="month"
               onClickDay={(date) => clickDayHandler(date)}
               value={date}
-              className="flex-grow rounded border-shamrock-green text-midnight text-xl justify-self-stretch px-10 tablet:px-32 py-4"
+              className="flex-grow text-midnight text-xl justify-self-stretch px-10 tablet:px-32 py-4"
               tileClassName="rounded text-md"
             />
             {console.log(date)}
