@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const ReportDate = (props) => {
+  const navigate = useNavigate();
   const { date } = useParams();
   const [reports, setReports] = useState({});
   const [user, setUser] = useState("");
@@ -29,6 +30,7 @@ const ReportDate = (props) => {
         console.log(error);
         localStorage.removeItem("authToken");
         setError("You are not authorized please login");
+        navigate("/login", { replace: true });
       }
     };
     fetchEntiresByDate();
