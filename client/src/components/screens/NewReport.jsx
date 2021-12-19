@@ -65,9 +65,13 @@ const NewReport = (props) => {
     const entry = {};
     entry.material = JSON.parse(e.target.material.value);
     entry.supplier = JSON.parse(e.target.supplier.value);
-    entry.ordered_load = e.target.orderedLoad.value;
-    entry.received_load = e.target.receivedLoad.value;
-    entry.quantity = e.target.quantity.value;
+    entry.ordered_load = e.target.orderedLoad.value
+      ? Math.round(e.target.orderedLoad.value)
+      : 0;
+    entry.received_load = e.target.receivedLoad.value
+      ? Math.round(e.target.receivedLoad.value)
+      : 0;
+    entry.quantity = e.target.quantity.value ? e.target.quantity.value : 0;
     entry.remarks = e.target.remarks.value;
     entry.date = props.selectedDate;
     // console.log(entry);
